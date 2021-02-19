@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  host: <%= ENV['DATABASE_HOST'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  pool: <%= Integer(ENV.fetch("DB_POOL", 5)) %>
+  reaping_frequency: <%= Integer(ENV.fetch("DB_REAPING_FREQUENCY", 10)) %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: tweeter_development
+
+test:
+  <<: *default
+  database: tweeter_test
+
+production:
+  <<: *default
+  database: <%= ENV.fetch('DATABASE_NAME','tweeter_production') %>
+  pool: <%= [Integer(ENV.fetch('MAX_THREADS', 5)), Integer(ENV.fetch("DB_POOL", 5))].max %>
+  min_messages: warning

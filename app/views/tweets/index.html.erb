@@ -1,0 +1,30 @@
+<div class="container mx-auto my-8 px-4">
+  <h1 class="text-4xl mb-2">Tweets</h1>
+  <% if @tweets.exists? %>
+  <div class="bg-white rounded shadow p-3">
+    <table class="w-full">
+      <thead>
+      <tr>
+                <th class="p-3 uppercase text-left text-xs text-gray-700">Content</th>
+                <th class="p-3 uppercase text-left text-xs text-gray-700">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tweets.each do |tweet| %>
+      <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                <td class="p-3"><%= tweet.content %></td>
+                <td>
+          <%= link_to "View", tweet, class: "btn btn-default" %>
+          <%= link_to "Edit", edit_tweet_path(tweet), class: "btn
+          btn-default" %>
+        </td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
+  <div class="mt-4">
+    <%= link_to 'New Tweet', new_tweet_path, class: "btn btn-default" %>
+  </div>
+</div>

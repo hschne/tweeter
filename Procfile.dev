@@ -1,0 +1,4 @@
+docker: docker-compose up --scale tweeter=0
+sidekiq: bundle exec sidekiq
+webpack: bundle exec bin/webpack-dev-server
+web: bundle exec rails server -p 3000

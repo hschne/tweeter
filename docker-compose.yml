@@ -1,0 +1,21 @@
+version: "3"
+services:
+  tweeter-db:
+    image: postgres
+    volumes:
+      - tweeter-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: tweeter
+      POSTGRES_USER: tweeter
+
+    
+  tweeter-redis:
+    image: redis
+    ports:
+      - 6379:6379
+    
+
+volumes:
+  tweeter-data:

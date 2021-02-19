@@ -1,0 +1,30 @@
+<%= form_with(model: tweet) do |form| %>
+<% if tweet.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+  <ul>
+    <% tweet.errors.each do |error| %>
+    <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+  <div class="mb-6">
+    
+      <%= form.label :content, class: "label" %>
+      <%= form.text_area :content, class: "input" %>
+    
+    </div>
+
+<div class="mt-2 flex justify-between items-center">
+  <%= link_to 'Back', tweets_path, class: "btn btn-default" %>
+  <div class="flex">
+    <%= form.button class: "btn btn-default" %>
+    <% if form.object.persisted? %>
+    <%= link_to 'Delete', form.object, class: "btn btn-default", method: :delete, data: { remote: true, confirm: "Are you sure?" }, class: "btn btn-warn" %>
+    <% end %>
+  </div>
+</div>
+<% end %>

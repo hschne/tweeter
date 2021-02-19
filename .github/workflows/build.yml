@@ -1,0 +1,49 @@
+name: Tweeter CI 🚀
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      DATABASE_HOST: localhost
+      DATABASE_USERNAME: tweeter
+      DATABASE_PASSWORD: tweeter
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: tweeter
+          POSTGRES_USER: tweeter
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+          bundler-cache: true
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.9
+      - name: Install dependencies
+        run: |
+          sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+          gem install bundler
+          bundle install --jobs 4
+          yarn install
+      - name: Setup databases
+        run: |
+          bin/rails db:setup
+      - name: Run tests
+        run: bin/rails test

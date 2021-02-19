@@ -1,0 +1,7 @@
+@tweets.map do |tweet|
+  {
+    id: tweet.id,
+    content: tweet.content,
+    url: tweet_url(tweet, format: :json)
+  }
+end
